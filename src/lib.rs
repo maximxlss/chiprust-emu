@@ -3,6 +3,17 @@ mod display;
 use rand::{thread_rng, Rng};
 use std::hint::unreachable_unchecked;
 
+pub struct Chip8State {
+    pub mem: Box<[u8; 4096]>,
+    pub regs: [u8; 16],
+    pub stack: [usize; 16],
+    pub pc: usize, // Program counter
+    pub i: usize,  // I-register
+    pub sp: usize, // Stack pointer
+    pub sound_timer: u8,
+    pub delay_timer: u8
+}
+
 pub struct Chip8 {
     mem: Box<[u8; 4096]>,
     regs: [u8; 16],
@@ -35,6 +46,19 @@ impl Chip8 {
             display: display::Display::new(),
             key_wait_handler,
             key_state_handler,
+        }
+    }
+
+    pub fn to_state(&self) -> Chip8State {
+        Chip8State {
+            mem: self.mem.clone(),
+            regs: self.regs,
+            stack: self.stack,
+            pc: self.pc,
+            i: self.i,
+            sp: self.sp,
+            sound_timer: self.sound_timer,
+            delay_timer: self.delay_timer
         }
     }
 
