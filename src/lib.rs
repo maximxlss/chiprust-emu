@@ -4,7 +4,7 @@ use rand::{thread_rng, Rng};
 use std::hint::unreachable_unchecked;
 
 pub struct Chip8 {
-    mem: [u8; 4096],
+    mem: Box<[u8; 4096]>,
     regs: [u8; 16],
     stack: [usize; 16],
     pc: usize, // Program counter
@@ -24,7 +24,7 @@ impl Chip8 {
         G: Fn(u8) -> bool,
     {
         Chip8 {
-            mem: [0; 4096],
+            mem: Box::new([0; 4096]),
             regs: [0; 16],
             stack: [0; 16],
             pc: 0,
