@@ -43,6 +43,7 @@ impl Display {
     }
 
     /// DO NOT USE WITH n = 0, IT'S UNDEFINED BEHAVIOR
+    #[allow(arithmetic_overflow)]
     pub fn scroll_side(&mut self, n: i32) {
         self.dirty = true;
         for row in &mut *self.d {
