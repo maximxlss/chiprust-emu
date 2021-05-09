@@ -42,6 +42,18 @@ impl Chip8 {
         self.regs
     }
 
+    pub fn get_i(&self) -> usize {
+        self.i
+    }
+
+    pub fn get_sound_timer(&self) -> u8 {
+        self.sound_timer
+    }
+
+    pub fn get_delay_timer(&self) -> u8 {
+        self.delay_timer
+    }
+
     pub fn is_sound_playing(&self) -> bool {
         self.sound_timer > 0
     }
