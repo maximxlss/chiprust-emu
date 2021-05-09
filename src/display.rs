@@ -35,10 +35,11 @@ impl Display {
     }
 
     pub fn scroll_down(&mut self, n: u32) {
+        let n = n as usize;
         self.dirty = true;
-        self.d.rotate_right(n as usize); // TODO: fix this (probably not the best solution)
-        self.d[0] = 0;
-        self.d[1] = 0
+        let mut tmp = Box::new([0u128; 64]);
+        tmp[n..].copy_from_slice(&self.d[..64-n]);
+        self.d = tmp;
     }
 
     /// DO NOT USE WITH n = 0, IT'S UNDEFINED BEHAVIOR
