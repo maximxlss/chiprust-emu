@@ -42,7 +42,6 @@ impl Display {
         self.d = tmp;
     }
 
-    /// DO NOT USE WITH n = 0, IT'S UNDEFINED BEHAVIOR
     #[allow(arithmetic_overflow)]
     pub fn scroll_side(&mut self, n: i32) {
         self.dirty = true;
@@ -50,7 +49,7 @@ impl Display {
             match n.cmp(&0) {
                 Ordering::Greater => *row >>= n,
                 Ordering::Less => *row <<= n.abs(),
-                Ordering::Equal => unsafe { unreachable_unchecked() },
+                Ordering::Equal => {},
             }
         }
     }
