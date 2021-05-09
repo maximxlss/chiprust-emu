@@ -1,4 +1,4 @@
-mod display;
+pub mod display;
 
 use rand::{thread_rng, Rng};
 use std::hint::unreachable_unchecked;
