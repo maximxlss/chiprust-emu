@@ -35,6 +35,7 @@ impl Display {
     }
 
     pub fn scroll_down(&mut self, n: u32) {
+        self.dirty = true;
         self.d.rotate_right(n as usize); // TODO: fix this (probably not the best solution)
         self.d[0] = 0;
         self.d[1] = 0
@@ -42,6 +43,7 @@ impl Display {
 
     /// DO NOT USE WITH n = 0, IT'S UNDEFINED BEHAVIOR
     pub fn scroll_side(&mut self, n: i32) {
+        self.dirty = true;
         for row in &mut *self.d {
             match n.cmp(&0) {
                 Ordering::Greater => *row = row.rotate_right(n as u32),
@@ -52,6 +54,7 @@ impl Display {
     }
 
     pub fn clear(&mut self) {
+        self.dirty = true;
         self.d = Box::new([0; 64])
     }
 
