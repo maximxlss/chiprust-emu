@@ -1,4 +1,4 @@
-use std::{cmp::Ordering, hint::unreachable_unchecked};
+use std::cmp::Ordering;
 
 /// Expands 8-bit integer to 16-bit like this:
 /// 0b01010111 -> 0b0011001100111111
