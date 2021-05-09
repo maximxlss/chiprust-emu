@@ -11,6 +11,12 @@ fn expand(n: u8) -> u16 {
     result | (result << 1)
 }
 
+#[inline(always)]
+pub fn get_px(d: &[u128; 64], x: usize, y: usize) -> bool {
+    let (shifted, _) = d[y].overflowing_shr(127 - x as u32);
+    (shifted & 1) == 1
+}
+
 pub struct Display {
     d: Box<[u128; 64]>,
     hi_res: bool,
@@ -98,8 +104,7 @@ impl Display {
 
     pub fn read_px(&mut self, x: usize, y: usize) -> bool {
         self.dirty = false;
-        let (shifted, _) = self.d[y].overflowing_shr(127 - x as u32);
-        (shifted & 1) == 1
+        get_px(&self.d, x, y)
     }
 
     pub fn hi_res(&self) -> bool {
