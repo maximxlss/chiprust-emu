@@ -3,6 +3,11 @@ mod display;
 use rand::{thread_rng, Rng};
 use std::hint::unreachable_unchecked;
 
+#[inline(always)]
+pub fn get_opcode(mem: &[u8; 4096], addr: usize) -> u16 {
+    (mem[addr] as u16) << 8 | mem[addr + 1] as u16
+}
+
 pub struct Chip8State {
     pub mem: Box<[u8; 4096]>,
     pub regs: [u8; 16],
@@ -87,7 +92,7 @@ impl Chip8 {
     }
 
     pub fn get_opcode(&self, addr: usize) -> u16 {
-        (self.mem[addr] as u16) << 8 | self.mem[addr + 1] as u16
+        get_opcode(&self.mem, addr)
     }
 
     pub fn get_pc(&self) -> usize {
