@@ -46,8 +46,8 @@ impl Display {
         self.dirty = true;
         for row in &mut *self.d {
             match n.cmp(&0) {
-                Ordering::Greater => *row = row.rotate_right(n as u32),
-                Ordering::Less => *row = row.rotate_left(n.abs() as u32),
+                Ordering::Greater => *row >>= n,
+                Ordering::Less => *row <<= n.abs(),
                 Ordering::Equal => unsafe { unreachable_unchecked() },
             }
         }
