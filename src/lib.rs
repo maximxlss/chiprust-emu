@@ -62,6 +62,10 @@ impl Chip8 {
         self.mem[addr]
     }
 
+    pub fn get_opcode(&self, addr: usize) -> u16 {
+        (self.mem[addr] as u16) << 8 | self.mem[addr + 1] as u16
+    }
+
     pub fn get_pc(&self) -> usize {
         self.pc
     }
