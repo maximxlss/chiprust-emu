@@ -43,9 +43,10 @@ impl Display {
     pub fn scroll_down(&mut self, n: u32) {
         let n = n as usize;
         self.dirty = true;
-        let mut tmp = Box::new([0u128; 64]);
-        tmp[n..].copy_from_slice(&self.d[..64-n]);
-        self.d = tmp;
+        self.d.copy_within(..64-n, n);
+        for i in 0..n {
+            self.d[i] = 0
+        }
     }
 
     #[allow(arithmetic_overflow)]
