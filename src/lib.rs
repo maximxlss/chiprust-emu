@@ -35,12 +35,10 @@ pub struct Chip8 {
 
 impl Chip8 {
     pub fn new<T, G>(
-        key_wait_handler: Option<&'static (dyn Fn() -> u8 + Send + Sync + 'static)>,
-        key_state_handler: Option<&'static (dyn Fn(u8) -> bool + Send + Sync + 'static)>
+        key_wait_handler: &'static (dyn Fn() -> u8 + Send + Sync + 'static),
+        key_state_handler: &'static (dyn Fn(u8) -> bool + Send + Sync + 'static)
     ) -> Chip8 
     {
-        let key_wait_handler = key_wait_handler.unwrap_or(&|| 0);
-        let key_state_handler = key_state_handler.unwrap_or(&|_| false);
         Chip8 {
             mem: Box::new([0; 4096]),
             regs: [0; 16],
