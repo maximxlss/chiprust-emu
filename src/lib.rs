@@ -29,14 +29,14 @@ pub struct Chip8 {
     sound_timer: u8,
     delay_timer: u8,
     pub display: display::Display,
-    key_wait_handler: &'static dyn Fn() -> u8,
-    key_state_handler: &'static dyn Fn(u8) -> bool,
+    key_wait_handler: &'static (dyn Fn() -> u8 + Send + Sync + 'static),
+    key_state_handler: &'static (dyn Fn(u8) -> bool + Send + Sync + 'static),
 }
 
 impl Chip8 {
     pub fn new<T, G>(
-        key_wait_handler: Option<&'static (dyn Fn() -> u8 + 'static)>,
-        key_state_handler: Option<&'static (dyn Fn(u8) -> bool + 'static)>
+        key_wait_handler: Option<&'static (dyn Fn() -> u8 + Send + Sync + 'static)>,
+        key_state_handler: Option<&'static (dyn Fn(u8) -> bool + Send + Sync + 'static)>
     ) -> Chip8 
     {
         let key_wait_handler = key_wait_handler.unwrap_or(&|| 0);
@@ -71,8 +71,8 @@ impl Chip8 {
 
     pub fn set_handlers(
         &mut self, 
-        key_wait_handler: &'static (dyn Fn() -> u8 + 'static),
-        key_state_handler: &'static (dyn std::ops::Fn(u8) -> bool + 'static)
+        key_wait_handler: &'static (dyn Fn() -> u8 + Send + Sync + 'static),
+        key_state_handler: &'static (dyn std::ops::Fn(u8) -> bool + Send + Sync + 'static)
     ) {
         self.key_wait_handler = key_wait_handler;
         self.key_state_handler = key_state_handler
