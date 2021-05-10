@@ -34,11 +34,13 @@ pub struct Chip8 {
 }
 
 impl Chip8 {
-    pub fn new<T, G>(key_wait_handler: &'static T, key_state_handler: &'static G) -> Chip8
-    where
-        T: Fn() -> u8,
-        G: Fn(u8) -> bool,
+    pub fn new<T, G>(
+        key_wait_handler: Option<&'static (dyn Fn() -> u8 + 'static)>,
+        key_state_handler: Option<&'static (dyn Fn(u8) -> bool + 'static)>
+    ) -> Chip8 
     {
+        let key_wait_handler = key_wait_handler.unwrap_or(&|| 0);
+        let key_state_handler = key_state_handler.unwrap_or(&|k| false);
         Chip8 {
             mem: Box::new([0; 4096]),
             regs: [0; 16],
@@ -65,6 +67,15 @@ impl Chip8 {
             sound_timer: self.sound_timer,
             delay_timer: self.delay_timer
         }
+    }
+
+    pub fn set_handler(
+        &mut self, 
+        key_wait_handler: &'static (dyn Fn() -> u8 + 'static),
+        key_state_handler: &'static (dyn std::ops::Fn(u8) -> bool + 'static)
+    ) {
+        self.key_wait_handler = key_wait_handler;
+        self.key_state_handler = key_state_handler
     }
 
     pub fn get_regs(&self) -> [u8; 16] {
