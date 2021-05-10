@@ -69,7 +69,7 @@ impl Chip8 {
         }
     }
 
-    pub fn set_handler(
+    pub fn set_handlers(
         &mut self, 
         key_wait_handler: &'static (dyn Fn() -> u8 + 'static),
         key_state_handler: &'static (dyn std::ops::Fn(u8) -> bool + 'static)
