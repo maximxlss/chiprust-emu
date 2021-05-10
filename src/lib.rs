@@ -40,7 +40,7 @@ impl Chip8 {
     ) -> Chip8 
     {
         let key_wait_handler = key_wait_handler.unwrap_or(&|| 0);
-        let key_state_handler = key_state_handler.unwrap_or(&|k| false);
+        let key_state_handler = key_state_handler.unwrap_or(&|_| false);
         Chip8 {
             mem: Box::new([0; 4096]),
             regs: [0; 16],
