@@ -5,4 +5,6 @@
 Simple Chip-8 emulator written in Rust.
 At the moment has some bugs, but some roms are working properly.
 
+Supports SuperChip.
+
 See [this crate](https://crates.io/crates/chiprust-emu-cli) for an interface to the emulator.
