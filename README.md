@@ -1,6 +1,6 @@
 # Chip-8 emulator backend in Rust.
 
-[![Crate](https://img.shields.io/crates/v/chiprust-emu?style=flat-square](https://crates.io/crates/rand)
+![Crates.io](https://img.shields.io/crates/v/chiprust-emu?style=flat-square)
 
 Simple Chip-8 emulator written in Rust.
 At the moment has some bugs, but some roms are working properly.
