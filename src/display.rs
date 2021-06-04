@@ -72,7 +72,7 @@ impl Display {
             y *= 2;
             expand(b)
         } else {
-            b as u16
+            (b as u16) << 8
         };
 
         let x = x % 128;
@@ -80,7 +80,7 @@ impl Display {
 
         let mut erased = false;
         self.dirty = true;
-        let mut b = (b as u128) << 120;
+        let mut b = (b as u128) << 112;
         b = b.rotate_right(x as u32);
 
         if b & self.d[y] != 0 {
