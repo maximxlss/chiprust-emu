@@ -80,8 +80,8 @@ impl Display {
 
         let mut erased = false;
         self.dirty = true;
-        let mut b = b as u128;
-        b = b.rotate_left(112 - x as u32);
+        let mut b = (b as u128) << 120;
+        b = b.rotate_right(x as u32);
 
         if b & self.d[y] != 0 {
             erased = true
